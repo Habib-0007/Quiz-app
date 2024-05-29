@@ -36,16 +36,23 @@ function EachQuiz() {
             <Toggle />
           </div>
           <div>
-            <em>Question 1 of {questions.length}</em>
-            <div>
-              <p>{questions[currentIndex].question}</p>
-              <progress></progress>
-              {questions[currentIndex].options.map((opt, index) => (
-                <button key={index}>{opt}</button>
-              ))}
-            </div>
-
-            <button>Submit</button>
+            <em className="question-no">Question 1 of {questions.length}</em>
+            <section className="question-box">
+              <section className="question-top">
+                <strong className="question">
+                  {questions[currentIndex].question}
+                </strong>
+                <progress></progress>
+              </section>
+              <section className="buttons">
+                {questions[currentIndex].options.map((opt, index) => (
+                  <button className="options" key={index}>
+                    {opt}
+                  </button>
+                ))}
+                <input type="button" value="Submit" />
+              </section>
+            </section>
           </div>
         </section>
       )}
