@@ -5,6 +5,8 @@
   margin: 0;
   border: none;
   margin: none;
+  list-style: none;
+  text-decoration: none;
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
 }
@@ -88,6 +90,10 @@ body #root {
   margin-top: 60px;
 }
 
+.welcome {
+  width: 100%;
+}
+
 .welcome p {
   font-size: 2.5em;
   font-weight: 50;
@@ -113,12 +119,13 @@ body #root {
   align-items: stretch;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
 }
 
 .each-card a {
   padding-right: 200px;
   padding: 18px;
-  background: var(--bg-col);
+  background: var(--option-bg);
   border-radius: 12px;
   display: flex;
   justify-content: start;
@@ -265,7 +272,7 @@ progress::-moz-progress-bar {
 
 .buttons button {
   display: block;
-  padding: 20px 16px;
+  padding: 14px 16px;
   font-size: 18px;
   font-weight: bolder;
   border-radius: 6px;
@@ -277,16 +284,18 @@ progress::-moz-progress-bar {
   align-items: center;
   flex-direction: row;
   gap: 14px;
+  border: 3px solid var(--option-bg);
+  transition: all ease 300ms;
 }
 
 .buttons button::before {
-  background-color: var(--text-color);
+  background-color: #ccc;
   color: var(--option-color);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 12px 16px;
+  padding: 10px 16px;
   font-size: 18px;
   font-weight: bolder;
   border-radius: 6px;
@@ -308,14 +317,40 @@ progress::-moz-progress-bar {
   content: "D";
 }
 
+.buttons button:hover {
+  border-color: var(--purple);
+}
+
+.buttons button:hover::before {
+  background-color: var(--accessibility-bg);
+  color: var(--purple);
+}
+
+.buttons button.clicked {
+  border-color: var(--purple);
+}
+
+.buttons button.clicked::before {
+  background-color: var(--purple);
+  color: #fff;
+}
+
 .buttons input[type="button"] {
   background-color: var(--purple);
-  color: var(--text-color);
+  color: #fff;
   display: block;
-  padding: 20px 16px;
+  padding: 14px 16px;
   font-size: 18px;
   font-weight: bolder;
   border-radius: 6px;
+}
+
+.buttons input[type="button"].none {
+  display: none;
+}
+
+.buttons input[type="button"]:hover {
+  opacity: 0.5;
 }
 
 @media screen and (min-width: 768px) {
@@ -327,14 +362,6 @@ progress::-moz-progress-bar {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: start;
-  }
-
-  .all-cards {
-    align-items: center;
-  }
-
-  .all-cards .each-card a {
-    width: 400px;
   }
 
   .question-box {
