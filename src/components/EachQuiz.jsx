@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import Toggle from "./Toggle";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function EachQuiz() {
   const { id } = useParams();
@@ -12,6 +12,8 @@ function EachQuiz() {
   const [showNextBtn, setShowNextBtn] = useState(false);
   const [score, setScore] = useState(0);
   const [correct, setCorrect] = useState(null);
+
+  const buttons = useRef(null);
 
   var questions = "";
   if (data && id == "html") {
@@ -51,15 +53,10 @@ function EachQuiz() {
                 </strong>
                 <progress min={1} value={currentIndex + 1} max={10}></progress>
               </section>
-              <section className="buttons">
+              <section className="buttons" ref={buttons}>
                 {questions[currentIndex].options.map((opt, index) => (
                   <button
-                    className={`options ${clicked === opt ? "clicked" : ""} ${
-                      clicked === questions[currentIndex].answer
-                        ? "correct"
-                        : clicked === opt
-                        ? "wrong"
-                        : ""
+                    className={`options ${clicked === opt ? "clicked" : ""}
                     }`}
                     key={index}
                     onClick={(event) => {
@@ -83,6 +80,16 @@ function EachQuiz() {
                       SetShowSubmitBtn(false);
                     }
 
+                    var btns = buttons.current.querySelectorAll("button");
+
+                    btns.forEach((btn, index) => {
+                      if (btn.textContent === questions[currentIndex].answer) {
+                        btns[index].classList.add("correct");
+                      } else {
+                        btns[index].classList.add("red");
+                      }
+                    });
+
                     setClicked(null);
                   }}
                 />
@@ -96,6 +103,13 @@ function EachQuiz() {
                     setCurrentIndex(currentIndex + 1);
                     SetShowSubmitBtn(true);
                     setShowNextBtn(false);
+
+                    var btns = buttons.current.querySelectorAll("button");
+
+                    btns.forEach((btn, index) => {
+                      btn.classList.remove("correct");
+                      btn.classList.remove("wrong");
+                    });
                   }}
                 />
               </section>
