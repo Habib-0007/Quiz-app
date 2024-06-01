@@ -8,6 +8,10 @@ function EachQuiz() {
   const { data, isPending, error } = useFetch("/data.json");
   const [clicked, setClicked] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showSubmitBtn, SetShowSubmitBtn] = useState(true);
+  const [showNextBtn, setShowNextBtn] = useState(false);
+  const [score, setScore] = useState(0);
+  const [correct, setCorrect] = useState(null);
 
   var questions = "";
   if (data && id == "html") {
@@ -19,7 +23,6 @@ function EachQuiz() {
   } else if (data && id == "accessibility") {
     questions = data.quizzes[3].questions;
   }
-  var questionNum = 1;
 
   return (
     <section>
@@ -51,7 +54,13 @@ function EachQuiz() {
               <section className="buttons">
                 {questions[currentIndex].options.map((opt, index) => (
                   <button
-                    className={`options ${clicked === opt ? "clicked" : ""}`}
+                    className={`options ${clicked === opt ? "clicked" : ""} ${
+                      clicked === questions[currentIndex].answer
+                        ? "correct"
+                        : clicked === opt
+                        ? "wrong"
+                        : ""
+                    }`}
                     key={index}
                     onClick={(event) => {
                       setClicked(event.target.textContent);
@@ -63,18 +72,30 @@ function EachQuiz() {
                 <input
                   type="button"
                   value="Submit"
+                  className={`${showSubmitBtn ? "" : "none"}`}
                   onClick={() => {
-                    console.log("first");
+                    if (questions[currentIndex].answer === clicked) {
+                      setScore(score + 1);
+                    }
+
+                    if (clicked !== null) {
+                      setShowNextBtn(true);
+                      SetShowSubmitBtn(false);
+                    }
+
+                    setClicked(null);
                   }}
                 />
                 <input
                   type="button"
                   value="Next"
-                  className={
+                  className={`${
                     questions.length - 1 === currentIndex ? "none" : ""
-                  }
+                  } ${showNextBtn ? "" : "none"}`}
                   onClick={() => {
                     setCurrentIndex(currentIndex + 1);
+                    SetShowSubmitBtn(true);
+                    setShowNextBtn(false);
                   }}
                 />
               </section>

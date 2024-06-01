@@ -330,8 +330,26 @@ progress::-moz-progress-bar {
   border-color: var(--purple);
 }
 
+.buttons button.clicked.correct {
+  border-color: var(--correct-color);
+}
+
+.buttons button.clicked.wrong {
+  border-color: var(--invalid-color);
+}
+
 .buttons button.clicked::before {
+  color: #fff;
   background-color: var(--purple);
+}
+
+.buttons button.clicked.correct::before {
+  background-color: var(--correct-color);
+  color: #fff;
+}
+
+.buttons button.clicked.wrong::before {
+  background-color: var(--invalid-color);
   color: #fff;
 }
 
