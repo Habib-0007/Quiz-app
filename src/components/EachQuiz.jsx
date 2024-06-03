@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
-import Toggle from "./Toggle";
 import { useState, useRef } from "react";
+import Result from "./Result";
+import Quiz from "./Quiz";
 
 function EachQuiz() {
   const { id } = useParams();
@@ -28,100 +29,36 @@ function EachQuiz() {
 
   return (
     <section>
-      {isPending && <p>Loading...</p>}
-      {data && (
-        <section className="quiz">
-          <div className="quiz-header">
-            <div>
-              <img
-                src={`/images/icon-${id}.svg`}
-                alt={id}
-                className={`${id}-bg`}
-              />
-              <p>{id}</p>
-            </div>
-            <Toggle />
-          </div>
-          <div>
-            <em className="question-no">
-              Question {currentIndex + 1} of {questions.length}
-            </em>
-            <section className="question-box">
-              <section className="question-top">
-                <strong className="question">
-                  {questions[currentIndex].question}
-                </strong>
-                <progress min={1} value={currentIndex + 1} max={10}></progress>
-              </section>
-              <section className="buttons" ref={buttons}>
-                {questions[currentIndex].options.map((opt, index) => (
-                  <button
-                    className={`options ${clicked === opt && "clicked"}`}
-                    key={index}
-                    disabled={disabled}
-                    onClick={(event) => {
-                      setClicked(event.target.textContent);
-                    }}
-                  >
-                    {opt}
-                  </button>
-                ))}
-                <input
-                  type="button"
-                  value="Submit"
-                  disabled={clicked === null ? true : false}
-                  className={`${showSubmitBtn ? "" : "none"}`}
-                  onClick={() => {
-                    if (questions[currentIndex].answer === clicked) {
-                      setScore(score + 1);
-                    }
-
-                    if (clicked !== null) {
-                      setShowNextBtn(true);
-                      SetShowSubmitBtn(false);
-                    }
-
-                    var btns = buttons.current.querySelectorAll("button");
-
-                    btns.forEach((btn) => {
-                      if (btn.textContent == questions[currentIndex].answer) {
-                        btn.classList.add("correct");
-                      } else {
-                        btn.classList.add("wrong");
-                      }
-                    });
-
-                    setDisabled(true);
-                  }}
-                />
-                <input
-                  type="button"
-                  value="Next"
-                  className={`${
-                    questions.length - 1 === currentIndex ? "none" : ""
-                  } ${showNextBtn ? "" : "none"}`}
-                  onClick={() => {
-                    setCurrentIndex(currentIndex + 1);
-                    SetShowSubmitBtn(true);
-                    setShowNextBtn(false);
-
-                    var btns = buttons.current.querySelectorAll("button");
-
-                    btns.forEach((btn) => {
-                      btn.classList.remove("correct");
-                      btn.classList.remove("wrong");
-                    });
-
-                    setDisabled(false);
-                    setClicked(null);
-                  }}
-                />
-              </section>
-            </section>
-          </div>
-        </section>
-      )}
-      {error && <p>{error}</p>}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Quiz
+              questions={questions}
+              data={data}
+              isPending={isPending}
+              error={error}
+              clicked={clicked}
+              setClicked={setClicked}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+              showSubmitBtn={showSubmitBtn}
+              SetShowSubmitBtn={SetShowSubmitBtn}
+              showNextBtn={showNextBtn}
+              setShowNextBtn={setShowNextBtn}
+              score={score}
+              setscore={setScore}
+              disabled={disabled}
+              setDisabled={setDisabled}
+              buttons={buttons}
+              id={id}
+            />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route path="/result" element={<Result id={id} />} />
+      </Routes>
     </section>
   );
 }
