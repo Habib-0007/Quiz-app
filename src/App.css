@@ -330,11 +330,11 @@ progress::-moz-progress-bar {
   border-color: var(--purple);
 }
 
-.buttons button.clicked.correct {
+.buttons button.correct {
   border-color: var(--correct-color);
 }
 
-.buttons button.clicked.wrong {
+.buttons button.wrong {
   border-color: var(--invalid-color);
 }
 
@@ -343,14 +343,36 @@ progress::-moz-progress-bar {
   background-color: var(--purple);
 }
 
-.buttons button.clicked.correct::before {
+.buttons button.correct::before {
   background-color: var(--correct-color);
   color: #fff;
 }
 
-.buttons button.clicked.wrong::before {
+.buttons button.wrong::before {
   background-color: var(--invalid-color);
   color: #fff;
+}
+
+.buttons button.correct::after {
+  content: "";
+  background-image: url("../public/images/icon-correct.svg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin-left: auto;
+}
+
+.buttons button.wrong::after {
+  content: "";
+  background-image: url("../public/images/icon-incorrect.svg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin-left: auto;
 }
 
 .buttons input[type="button"] {

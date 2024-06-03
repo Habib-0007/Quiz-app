@@ -11,7 +11,7 @@ function EachQuiz() {
   const [showSubmitBtn, SetShowSubmitBtn] = useState(true);
   const [showNextBtn, setShowNextBtn] = useState(false);
   const [score, setScore] = useState(0);
-  const [correct, setCorrect] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   const buttons = useRef(null);
 
@@ -56,9 +56,9 @@ function EachQuiz() {
               <section className="buttons" ref={buttons}>
                 {questions[currentIndex].options.map((opt, index) => (
                   <button
-                    className={`options ${clicked === opt ? "clicked" : ""}
-                    }`}
+                    className={`options ${clicked === opt && "clicked"}`}
                     key={index}
+                    disabled={disabled}
                     onClick={(event) => {
                       setClicked(event.target.textContent);
                     }}
@@ -69,6 +69,7 @@ function EachQuiz() {
                 <input
                   type="button"
                   value="Submit"
+                  disabled={clicked === null ? true : false}
                   className={`${showSubmitBtn ? "" : "none"}`}
                   onClick={() => {
                     if (questions[currentIndex].answer === clicked) {
@@ -82,15 +83,15 @@ function EachQuiz() {
 
                     var btns = buttons.current.querySelectorAll("button");
 
-                    btns.forEach((btn, index) => {
-                      if (btn.textContent === questions[currentIndex].answer) {
-                        btns[index].classList.add("correct");
+                    btns.forEach((btn) => {
+                      if (btn.textContent == questions[currentIndex].answer) {
+                        btn.classList.add("correct");
                       } else {
-                        btns[index].classList.add("red");
+                        btn.classList.add("wrong");
                       }
                     });
 
-                    setClicked(null);
+                    setDisabled(true);
                   }}
                 />
                 <input
@@ -106,10 +107,13 @@ function EachQuiz() {
 
                     var btns = buttons.current.querySelectorAll("button");
 
-                    btns.forEach((btn, index) => {
+                    btns.forEach((btn) => {
                       btn.classList.remove("correct");
                       btn.classList.remove("wrong");
                     });
+
+                    setDisabled(false);
+                    setClicked(null);
                   }}
                 />
               </section>
