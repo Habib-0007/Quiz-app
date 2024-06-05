@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Header from "./Header";
 
 const Quiz = ({
@@ -40,7 +41,7 @@ const Quiz = ({
               <section className="buttons" ref={buttons}>
                 {questions[currentIndex].options.map((opt, index) => (
                   <button
-                    className={`options ${clicked === opt && "clicked"}`}
+                    className={`options ${clicked === opt ? "clicked" : ""}`}
                     key={index}
                     disabled={disabled}
                     onClick={(event) => {
@@ -100,6 +101,16 @@ const Quiz = ({
                     setClicked(null);
                   }}
                 />
+                <Link
+                  to={`/quiz/${id}/result`}
+                  className={`
+                    ${
+                      currentIndex + 1 === questions.length ? "" : "none"
+                    } finish-btn
+                  `}
+                >
+                  Finish
+                </Link>
               </section>
             </section>
           </div>

@@ -3,6 +3,7 @@ import useFetch from "./useFetch";
 import { useState, useRef } from "react";
 import Result from "./Result";
 import Quiz from "./Quiz";
+import NotFound from "./NotFound";
 
 function EachQuiz() {
   const { id } = useParams();
@@ -47,7 +48,7 @@ function EachQuiz() {
               showNextBtn={showNextBtn}
               setShowNextBtn={setShowNextBtn}
               score={score}
-              setscore={setScore}
+              setScore={setScore}
               disabled={disabled}
               setDisabled={setDisabled}
               buttons={buttons}
@@ -56,8 +57,18 @@ function EachQuiz() {
           }
         />
       </Routes>
+
       <Routes>
-        <Route path="/result" element={<Result id={id} />} />
+        {currentIndex + 1 === questions.length && (
+          <Route
+            path="/result"
+            element={<Result id={id} score={score} questions={questions} />}
+          />
+        )}
+      </Routes>
+
+      <Routes>
+        <Route path="*" element={<NotFound data={data} />} />
       </Routes>
     </section>
   );
