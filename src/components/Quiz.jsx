@@ -55,7 +55,9 @@ const Quiz = ({
                   type="button"
                   value="Submit"
                   disabled={clicked === null ? true : false}
-                  className={`${showSubmitBtn ? "" : "none"}`}
+                  className={`${showSubmitBtn ? "" : "none"} ${
+                    currentIndex + 1 === questions.length ? "none" : ""
+                  }`}
                   onClick={() => {
                     if (questions[currentIndex].answer === clicked) {
                       setScore(score + 1);

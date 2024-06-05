@@ -1,8 +1,10 @@
 import React from "react";
 import Header from "./Header";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-const Result = ({ id, score, questions }) => {
+const Result = ({ score, questions }) => {
+  const { id } = useParams();
+
   return (
     <section className="finish">
       <Header id={id} />

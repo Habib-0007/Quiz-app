@@ -1,23 +1,25 @@
 import { Routes, Route, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import { useState, useRef } from "react";
-import Result from "./Result";
 import Quiz from "./Quiz";
-import NotFound from "./NotFound";
 
-function EachQuiz() {
+function EachQuiz({
+  score,
+  setScore,
+  questions,
+  currentIndex,
+  setCurrentIndex,
+}) {
   const { id } = useParams();
   const { data, isPending, error } = useFetch("/data.json");
   const [clicked, setClicked] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [showSubmitBtn, SetShowSubmitBtn] = useState(true);
   const [showNextBtn, setShowNextBtn] = useState(false);
-  const [score, setScore] = useState(0);
+
   const [disabled, setDisabled] = useState(false);
 
   const buttons = useRef(null);
 
-  var questions = "";
   if (data && id == "html") {
     questions = data.quizzes[0].questions;
   } else if (data && id == "css") {
@@ -56,19 +58,6 @@ function EachQuiz() {
             />
           }
         />
-      </Routes>
-
-      <Routes>
-        {currentIndex + 1 === questions.length && (
-          <Route
-            path="/result"
-            element={<Result id={id} score={score} questions={questions} />}
-          />
-        )}
-      </Routes>
-
-      <Routes>
-        <Route path="*" element={<NotFound data={data} />} />
       </Routes>
     </section>
   );
