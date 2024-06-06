@@ -7,7 +7,7 @@ import NotFound from "./components/NotFound";
 import Result from "./components/Result";
 
 function App() {
-  var questions = "";
+  const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   return (
@@ -20,6 +20,7 @@ function App() {
             element={
               <EachQuiz
                 questions={questions}
+                setQuestions={setQuestions}
                 score={score}
                 setScore={setScore}
                 currentIndex={currentIndex}

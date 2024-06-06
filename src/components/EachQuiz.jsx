@@ -9,6 +9,7 @@ function EachQuiz({
   questions,
   currentIndex,
   setCurrentIndex,
+  setQuestions,
 }) {
   const { id } = useParams();
   const { data, isPending, error } = useFetch("/data.json");
@@ -21,13 +22,13 @@ function EachQuiz({
   const buttons = useRef(null);
 
   if (data && id == "html") {
-    questions = data.quizzes[0].questions;
+    setQuestions(data.quizzes[0].questions);
   } else if (data && id == "css") {
-    questions = data.quizzes[1].questions;
+    setQuestions(data.quizzes[1].questions);
   } else if (data && id == "javascript") {
-    questions = data.quizzes[2].questions;
+    setQuestions(data.quizzes[2].questions);
   } else if (data && id == "accessibility") {
-    questions = data.quizzes[3].questions;
+    setQuestions(data.quizzes[3].questions);
   }
 
   return (
