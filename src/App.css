@@ -334,7 +334,7 @@ progress::-moz-progress-bar {
   border-color: var(--correct-color);
 }
 
-.buttons button.wrong {
+.buttons button.wrong.clicked {
   border-color: var(--invalid-color);
 }
 
@@ -348,7 +348,7 @@ progress::-moz-progress-bar {
   color: #fff;
 }
 
-.buttons button.wrong::before {
+.buttons button.clicked.wrong::before {
   background-color: var(--invalid-color);
   color: #fff;
 }
@@ -364,7 +364,7 @@ progress::-moz-progress-bar {
   margin-left: auto;
 }
 
-.buttons button.wrong::after {
+.buttons button.clicked.wrong::after {
   content: "";
   background-image: url("../public/images/icon-incorrect.svg");
   display: flex;
